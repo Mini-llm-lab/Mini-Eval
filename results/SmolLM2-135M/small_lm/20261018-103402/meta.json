@@ -1,0 +1,89 @@
+{
+  "protocol": 1,
+  "model": {
+    "name": "SmolLM2-135M",
+    "kind": "hf",
+    "family": "SmolLM2-135M",
+    "params": 134515008,
+    "non_embedding_params": 106203456,
+    "tokens_seen": 2000000000000,
+    "pretrained": "HuggingFaceTB/SmolLM2-135M",
+    "revision": "93efa2f097d58c2a74874c7e644dbc9b0cee75a2",
+    "max_length": 2048,
+    "checkpoint": null,
+    "sha256": null,
+    "tokenizer_sha256": null
+  },
+  "suite": {
+    "name": "small_lm",
+    "description": "Zero-shot suite chosen to give signal on models under 1B parameters.",
+    "num_fewshot": 0,
+    "limit": null,
+    "batch_size": 16,
+    "tasks": [
+      {
+        "name": "hellaswag",
+        "primary": "acc_norm",
+        "chance": 0.25
+      },
+      {
+        "name": "arc_easy",
+        "primary": "acc_norm",
+        "chance": 0.25
+      },
+      {
+        "name": "arc_challenge",
+        "primary": "acc_norm",
+        "chance": 0.25
+      },
+      {
+        "name": "piqa",
+        "primary": "acc_norm",
+        "chance": 0.5
+      },
+      {
+        "name": "winogrande",
+        "primary": "acc",
+        "chance": 0.5
+      },
+      {
+        "name": "openbookqa",
+        "primary": "acc_norm",
+        "chance": 0.25
+      },
+      {
+        "name": "sciq",
+        "primary": "acc_norm",
+        "chance": 0.25
+      },
+      {
+        "name": "lambada_openai",
+        "primary": "acc",
+        "chance": 0.0
+      },
+      {
+        "name": "wikitext",
+        "primary": "bits_per_byte",
+        "chance": null
+      }
+    ]
+  },
+  "device": "cpu",
+  "fingerprint": {},
+  "lm_eval": "0.4.13",
+  "python": "3.11.15",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "torch": "2.14.1",
+  "transformers": "5.19.0",
+  "mini_eval": {
+    "commit": "2422aaca43c5609b45456f10dd578e661ed9e24b",
+    "dirty": false
+  },
+  "mini_llm": {
+    "version": "0.1.0",
+    "commit": "b2312e29cef9b931f84b376ca1fbe69f9ba30a17",
+    "dirty": false
+  },
+  "date": "2026-10-18T10:34:02",
+  "duration_seconds": 2544.2
+}
