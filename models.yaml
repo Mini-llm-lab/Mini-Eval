@@ -35,6 +35,15 @@ models:
     non_embedding_params: 18915328
     tokens_seen: 299892736000
 
+  - name: pythia-160m-step143000
+    kind: hf
+    family: pythia-160m
+    pretrained: EleutherAI/pythia-160m
+    revision: step143000
+    params: 162322944
+    non_embedding_params: 85056000
+    tokens_seen: 299892736000
+
   - name: SmolLM2-135M
     kind: hf
     family: SmolLM2-135M
