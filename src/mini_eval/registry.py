@@ -23,6 +23,7 @@ class Model:
     tokens_seen: int
     pretrained: str | None = None
     revision: str | None = None
+    max_length: int | None = None
     checkpoint: str | None = None
     sha256: str | None = None
     tokenizer_sha256: str | None = None

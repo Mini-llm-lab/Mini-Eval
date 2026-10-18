@@ -40,6 +40,9 @@ models:
     family: SmolLM2-135M
     pretrained: HuggingFaceTB/SmolLM2-135M
     revision: 93efa2f097d58c2a74874c7e644dbc9b0cee75a2
+    # Native context is 8192, which does not fit the eval machine; capped to
+    # Pythia's 2048 so the run stays comparable and memory-safe.
+    max_length: 2048
     params: 134515008
     non_embedding_params: 106203456
     tokens_seen: 2000000000000

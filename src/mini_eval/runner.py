@@ -46,6 +46,8 @@ def training_package_info():
 def build_target(model, device, batch_size, allow_unpinned):
     if model.kind == "hf":
         args = f"pretrained={model.pretrained},revision={model.revision},dtype=float32"
+        if model.max_length:
+            args += f",max_length={model.max_length}"
         return {"model": "hf", "model_args": args}, {}
     from mini_eval.backend import NativeLM
 

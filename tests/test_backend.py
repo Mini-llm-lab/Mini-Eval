@@ -109,6 +109,7 @@ def test_registry_loads_expected_models():
     assert smol.revision == "93efa2f097d58c2a74874c7e644dbc9b0cee75a2"
     assert smol.params == 134_515_008
     assert smol.non_embedding_params == 134_515_008 - 49_152 * 576
+    assert smol.max_length == 2048
     assert all(m.pretrained and m.revision for m in registry.values() if m.kind == "hf")
     natives = [m for m in registry.values() if m.kind == "native"]
     assert natives, "no native models registered"
@@ -117,6 +118,30 @@ def test_registry_loads_expected_models():
     assert {t.name for t in suite.tasks} >= {"hellaswag", "arc_easy", "piqa"}
     with pytest.raises(SystemExit):
         load_suite("does_not_exist")
+
+
+def test_hf_target_includes_max_length():
+    from mini_eval.registry import Model
+    from mini_eval.runner import build_target
+
+    model = Model(
+        name="hf",
+        kind="hf",
+        family="hf",
+        params=1,
+        non_embedding_params=1,
+        tokens_seen=1,
+        pretrained="org/model",
+        revision="abc",
+    )
+    target, fingerprints = build_target(model, "cpu", 16, False)
+    assert target["model"] == "hf"
+    assert target["model_args"] == "pretrained=org/model,revision=abc,dtype=float32"
+    assert fingerprints == {}
+
+    model.max_length = 2048
+    target, _ = build_target(model, "cpu", 16, False)
+    assert target["model_args"] == "pretrained=org/model,revision=abc,dtype=float32,max_length=2048"
 
 
 def test_verify_native_refuses_unpinned(tmp_path):
