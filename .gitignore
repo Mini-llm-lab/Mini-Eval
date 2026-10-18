@@ -14,3 +14,5 @@ __pycache__/
 local.yaml
 
 results/*/*/*/samples/
+
+.DS_Store
