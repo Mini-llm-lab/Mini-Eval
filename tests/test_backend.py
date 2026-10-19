@@ -109,12 +109,24 @@ def test_registry_loads_expected_models():
     assert smol.revision == "93efa2f097d58c2a74874c7e644dbc9b0cee75a2"
     assert smol.params == 134_515_008
     assert smol.non_embedding_params == 134_515_008 - 49_152 * 576
-    assert smol.max_length == 2048
+    assert smol.max_length is None  # protocol v2: native 8192-token context
     assert all(m.pretrained and m.revision for m in registry.values() if m.kind == "hf")
     natives = [m for m in registry.values() if m.kind == "native"]
     assert natives, "no native models registered"
-    assert all(m.sha256 and m.tokenizer_sha256 for m in natives), "native models must be fingerprinted"
+    # The 40M checkpoint does not exist yet: its sha256 is filled on the pod
+    # right after training (`mini-eval fingerprint`). verify_native refuses to
+    # run it until then, so the invariant holds for every runnable model.
+    pending = {"mini-llm-40M-35096steps"}
+    for m in natives:
+        assert m.tokenizer_sha256, f"{m.name} has no tokenizer fingerprint"
+        if m.name not in pending:
+            assert m.sha256, f"{m.name} has no checkpoint fingerprint"
+    m40 = registry["mini-llm-40M-35096steps"]
+    assert m40.params == 42_476_032
+    assert m40.non_embedding_params == 25_698_816
+    assert m40.tokens_seen == 4_600_268_800
     suite = load_suite("small_lm")
+    assert suite.batch_size == 4
     assert {t.name for t in suite.tasks} >= {"hellaswag", "arc_easy", "piqa"}
     with pytest.raises(SystemExit):
         load_suite("does_not_exist")

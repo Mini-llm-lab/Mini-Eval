@@ -49,9 +49,8 @@ models:
     family: SmolLM2-135M
     pretrained: HuggingFaceTB/SmolLM2-135M
     revision: 93efa2f097d58c2a74874c7e644dbc9b0cee75a2
-    # Native context is 8192, which does not fit the eval machine; capped to
-    # Pythia's 2048 so the run stays comparable and memory-safe.
-    max_length: 2048
+    # Protocol v2: runs at its native 8192-token context on the GPU server
+    # (v1 capped it at 2048 because the eval machine could not fit 8192).
     params: 134515008
     non_embedding_params: 106203456
     tokens_seen: 2000000000000
@@ -65,6 +64,19 @@ models:
     params: 34087424
     non_embedding_params: 25698816
     tokens_seen: 196608000
+
+  - name: mini-llm-40M-35096steps
+    kind: native
+    family: mini-llm-40M
+    checkpoint: 32k/mini-llm-base-40M-35096steps.pt
+    # sha256: fill on the pod once training is done:
+    #   uv run mini-eval fingerprint mini-llm-40M-35096steps
+    # Runs are refused until the value is pasted here (or --allow-unpinned is
+    # passed, which is for test runs only).
+    tokenizer_sha256: f35677bad9e5f15da8f9842cc8c13cd9009ad86b498ffa4c59ebf46f3c88ade9
+    params: 42476032
+    non_embedding_params: 25698816
+    tokens_seen: 4600268800
 
   - name: mini-llm-70M-22000steps
     kind: native

@@ -1,6 +1,8 @@
-# Evaluation protocol v1
+# Evaluation protocol v2
 
 These choices are fixed so that every number in this repository is comparable with the others. Anything that changes a score changes the protocol version (`PROTOCOL_VERSION` in `src/mini_eval/__init__.py`), and every model, references included, is then evaluated again.
+
+**What changed in v2:** runs are produced on the Linux GPU server only (CUDA), every model runs at its native context length (the v1 cap that held SmolLM2-135M at 2048 tokens is removed, so it runs at 8192), and the suite batch size is 4.
 
 ## Fixed settings
 
@@ -11,7 +13,9 @@ These choices are fixed so that every number in this repository is comparable wi
 | Precision | float32                                             | No rounding differences between models                                                           |
 | Examples  | Full test sets for reported numbers (`limit: null`) | A limit is only for smoke tests                                                                  |
 | Decoding  | Greedy, for the few generative uses                 | Deterministic                                                                                    |
-| Device    | Recorded in every run, `cpu` by default             | Backends differ numerically; MPS is checked against cpu with `mini-eval check`                   |
+| Device    | `cuda`, on the Linux GPU server; recorded in every run | The code refuses to run on macOS, so no local numbers can enter the results                    |
+| Context   | Model-native (up to 8192)                           | v1 capped SmolLM2-135M at 2048 because the eval machine could not fit its native 8192           |
+| Batch     | 4                                                   | Memory-safe at 8192 tokens; batch size must not change scores anyway (checked by `mini-eval check`) |
 
 ## Suite `small_lm`
 
@@ -35,6 +39,7 @@ The primary metric of each task is declared in `suites/small_lm.yaml` before any
 
 - **References** are Hugging Face models pinned to a revision (`HuggingFaceTB/SmolLM2-135M` to `93efa2f0`, for example). Pythia publishes intermediate checkpoints (`step64`, `step128`, ...) at 2,097,152 tokens per step, which allows comparisons at an equal number of training tokens.
 - **Native models** are identified by the SHA-256 of the checkpoint and of `tok.json`, stored in `models.yaml`. A run is refused if the files on disk do not match.
+- Every model runs at its **native context length**; the value is recorded in the run metadata.
 - Size is described by **non-embedding parameters** as well as total parameters, because embeddings are a very different share of the total from one model to another (about 73% for Pythia-70M).
 
 ## Reading results
@@ -46,8 +51,8 @@ The primary metric of each task is declared in `suites/small_lm.yaml` before any
 ## Before trusting a number
 
 1. **Reproduce a published result** with the Hugging Face path (for example Pythia-70M on HellaSwag) and compare it with the values in the model card or paper. A mismatch points to a configuration error.
-2. Run `mini-eval check MODEL` on every native model: batch size must not change scores, the device must agree with cpu, and an untrained model must stay near chance.
-3. Run reported numbers with `--require-clean`, from a committed working tree.
+2. Run `mini-eval check MODEL --device cuda` on every native model: batch size must not change scores, cuda must agree with cpu within tolerance, and an untrained model must stay near chance.
+3. Run reported numbers with `--require-clean`, from a committed working tree, on the server.
 
 ## Known gaps
 

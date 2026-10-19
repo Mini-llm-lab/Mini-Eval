@@ -71,7 +71,7 @@ def main():
     p.add_argument("suite")
     p.add_argument("models", nargs="*")
     p.add_argument("--all", action="store_true")
-    p.add_argument("--device", default="cpu")
+    p.add_argument("--device", default="cpu", help="cpu | cuda; protocol v2 numbers run with cuda on the server")
     p.add_argument("--limit", type=int)
     p.add_argument("--allow-unpinned", action="store_true")
     p.add_argument("--require-clean", action="store_true")
@@ -80,7 +80,7 @@ def main():
 
     p = sub.add_parser("check")
     p.add_argument("model")
-    p.add_argument("--device", default="cpu")
+    p.add_argument("--device", default="cpu", help="cpu | cuda; run with cuda on the server")
     p.add_argument("--allow-unpinned", action="store_true")
     p.set_defaults(func=cmd_check)
 

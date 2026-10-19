@@ -2,7 +2,7 @@ name: small_lm
 description: Zero-shot suite chosen to give signal on models under 1B parameters.
 num_fewshot: 0
 limit: null
-batch_size: 16
+batch_size: 4
 tasks:
   - {name: hellaswag, primary: acc_norm, chance: 0.25}
   - {name: arc_easy, primary: acc_norm, chance: 0.25}
