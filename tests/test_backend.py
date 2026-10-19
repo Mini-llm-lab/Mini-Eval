@@ -1,14 +1,3 @@
-"""Tests for the ScoringLM adapter and the registry/runner/report logic.
-
-These tests use a fake logits function and a tiny session-scoped tokenizer
-(see conftest.py): no network, no GPU, no training checkpoint needed.
-
-The helpers PAIRS / encode_pair / request are also imported by
-test_native.py, so their tokenization must match the real lm-eval harness:
-trailing spaces move to the continuation, an empty context is replaced by
-the end-of-text token (see TemplateLM._encode_pair / loglikelihood).
-"""
-
 import math
 from types import SimpleNamespace
 
@@ -109,13 +98,10 @@ def test_registry_loads_expected_models():
     assert smol.revision == "93efa2f097d58c2a74874c7e644dbc9b0cee75a2"
     assert smol.params == 134_515_008
     assert smol.non_embedding_params == 134_515_008 - 49_152 * 576
-    assert smol.max_length is None  # protocol v2: native 8192-token context
+    assert smol.max_length is None
     assert all(m.pretrained and m.revision for m in registry.values() if m.kind == "hf")
     natives = [m for m in registry.values() if m.kind == "native"]
     assert natives, "no native models registered"
-    # The 40M checkpoint does not exist yet: its sha256 is filled on the pod
-    # right after training (`mini-eval fingerprint`). verify_native refuses to
-    # run it until then, so the invariant holds for every runnable model.
     pending = {"mini-llm-40M-35096steps"}
     for m in natives:
         assert m.tokenizer_sha256, f"{m.name} has no tokenizer fingerprint"
