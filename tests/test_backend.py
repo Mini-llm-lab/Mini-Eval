@@ -88,10 +88,13 @@ def test_rolling_and_generation_run(lm):
 
 
 def test_registry_loads_expected_models():
-    from mini_eval.registry import load_registry, load_suite
+    from pathlib import Path
+
+    from mini_eval.registry import load_registry, load_suite, native_paths
 
     registry = load_registry()
     assert "pythia-70m-step143000" in registry
+    assert "pythia-160m-step143000" in registry
     smol = registry["SmolLM2-135M"]
     assert smol.kind == "hf"
     assert smol.pretrained == "HuggingFaceTB/SmolLM2-135M"
@@ -111,6 +114,12 @@ def test_registry_loads_expected_models():
     assert m40.params == 42_476_032
     assert m40.non_embedding_params == 25_698_816
     assert m40.tokens_seen == 4_600_268_800
+    assert registry["mini-llm-150M-34332steps"].tokenizer == "32k/tok.json"
+    checkpoint, tokenizer = native_paths(m40, base=Path("/data"))
+    assert checkpoint == Path("/data/32k/40M/mini-llm-base-40M-35096steps.pt")
+    assert tokenizer == Path("/data/32k/tok.json")
+    _, legacy = native_paths(registry["mini-llm-70M-22000steps"], base=Path("/data"))
+    assert legacy == Path("/data/16k/tok.json")
     suite = load_suite("small_lm")
     assert suite.batch_size == 4
     assert {t.name for t in suite.tasks} >= {"hellaswag", "arc_easy", "piqa"}

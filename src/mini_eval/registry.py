@@ -25,6 +25,7 @@ class Model:
     revision: str | None = None
     max_length: int | None = None
     checkpoint: str | None = None
+    tokenizer: str | None = None
     sha256: str | None = None
     tokenizer_sha256: str | None = None
 
@@ -100,7 +101,10 @@ def sha256_file(path):
 
 
 def native_paths(model, base=None):
-    checkpoint = (base or models_dir()) / model.checkpoint
+    root = base or models_dir()
+    checkpoint = root / model.checkpoint
+    if model.tokenizer:
+        return checkpoint, root / model.tokenizer
     return checkpoint, checkpoint.parent / "tok.json"
 
 

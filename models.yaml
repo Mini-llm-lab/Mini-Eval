@@ -68,7 +68,8 @@ models:
   - name: mini-llm-40M-35096steps
     kind: native
     family: mini-llm-40M
-    checkpoint: 32k/mini-llm-base-40M-35096steps.pt
+    checkpoint: 32k/40M/mini-llm-base-40M-35096steps.pt
+    tokenizer: 32k/tok.json
     # sha256: fill on the pod once training is done:
     #   uv run mini-eval fingerprint mini-llm-40M-35096steps
     # Runs are refused until the value is pasted here (or --allow-unpinned is
@@ -91,7 +92,8 @@ models:
   - name: mini-llm-150M-34332steps
     kind: native
     family: mini-llm-150M
-    checkpoint: 32k/mini-llm-base-150M-34332steps.pt
+    checkpoint: 32k/150M/mini-llm-base-150M-34332steps.pt
+    tokenizer: 32k/tok.json
     sha256: 735c9e62572a689c4796ceb21ce5a2edd8b2559196e81ee71250c1814b9d4eff
     tokenizer_sha256: f35677bad9e5f15da8f9842cc8c13cd9009ad86b498ffa4c59ebf46f3c88ade9
     params: 152596224
