@@ -1,0 +1,90 @@
+{
+  "protocol": 2,
+  "model": {
+    "name": "pythia-70m-step143000",
+    "kind": "hf",
+    "family": "pythia-70m",
+    "params": 70426624,
+    "non_embedding_params": 18915328,
+    "tokens_seen": 299892736000,
+    "pretrained": "EleutherAI/pythia-70m",
+    "revision": "step143000",
+    "max_length": null,
+    "checkpoint": null,
+    "tokenizer": null,
+    "sha256": null,
+    "tokenizer_sha256": null
+  },
+  "suite": {
+    "name": "small_lm",
+    "description": "Zero-shot suite chosen to give signal on models under 1B parameters.",
+    "num_fewshot": 0,
+    "limit": null,
+    "batch_size": 4,
+    "tasks": [
+      {
+        "name": "hellaswag",
+        "primary": "acc_norm",
+        "chance": 0.25
+      },
+      {
+        "name": "arc_easy",
+        "primary": "acc_norm",
+        "chance": 0.25
+      },
+      {
+        "name": "arc_challenge",
+        "primary": "acc_norm",
+        "chance": 0.25
+      },
+      {
+        "name": "piqa",
+        "primary": "acc_norm",
+        "chance": 0.5
+      },
+      {
+        "name": "winogrande",
+        "primary": "acc",
+        "chance": 0.5
+      },
+      {
+        "name": "openbookqa",
+        "primary": "acc_norm",
+        "chance": 0.25
+      },
+      {
+        "name": "sciq",
+        "primary": "acc_norm",
+        "chance": 0.25
+      },
+      {
+        "name": "lambada_openai",
+        "primary": "acc",
+        "chance": 0.0
+      },
+      {
+        "name": "wikitext",
+        "primary": "bits_per_byte",
+        "chance": null
+      }
+    ]
+  },
+  "device": "cuda",
+  "fingerprint": {},
+  "lm_eval": "0.4.13",
+  "python": "3.11.17",
+  "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+  "torch": "2.14.1",
+  "transformers": "5.19.0",
+  "mini_eval": {
+    "commit": "ff80e37f6734ff2454af270234a139d0a2227009",
+    "dirty": false
+  },
+  "mini_llm": {
+    "version": "0.1.0",
+    "commit": "611ba64951624468f3d85b0de4e5fcae9734d352",
+    "dirty": true
+  },
+  "date": "2026-10-22T21:30:45",
+  "duration_seconds": 335.4
+}

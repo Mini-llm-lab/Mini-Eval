@@ -1,0 +1,93 @@
+{
+  "protocol": 2,
+  "model": {
+    "name": "mini-llm-150M-34332steps",
+    "kind": "native",
+    "family": "mini-llm-150M",
+    "params": 152596224,
+    "non_embedding_params": 127430400,
+    "tokens_seen": 4499963904,
+    "pretrained": null,
+    "revision": null,
+    "max_length": null,
+    "checkpoint": "32k/150M/mini-llm-base-150M-34332steps.pt",
+    "tokenizer": "32k/tok.json",
+    "sha256": "735c9e62572a689c4796ceb21ce5a2edd8b2559196e81ee71250c1814b9d4eff",
+    "tokenizer_sha256": "f35677bad9e5f15da8f9842cc8c13cd9009ad86b498ffa4c59ebf46f3c88ade9"
+  },
+  "suite": {
+    "name": "small_lm",
+    "description": "Zero-shot suite chosen to give signal on models under 1B parameters.",
+    "num_fewshot": 0,
+    "limit": null,
+    "batch_size": 4,
+    "tasks": [
+      {
+        "name": "hellaswag",
+        "primary": "acc_norm",
+        "chance": 0.25
+      },
+      {
+        "name": "arc_easy",
+        "primary": "acc_norm",
+        "chance": 0.25
+      },
+      {
+        "name": "arc_challenge",
+        "primary": "acc_norm",
+        "chance": 0.25
+      },
+      {
+        "name": "piqa",
+        "primary": "acc_norm",
+        "chance": 0.5
+      },
+      {
+        "name": "winogrande",
+        "primary": "acc",
+        "chance": 0.5
+      },
+      {
+        "name": "openbookqa",
+        "primary": "acc_norm",
+        "chance": 0.25
+      },
+      {
+        "name": "sciq",
+        "primary": "acc_norm",
+        "chance": 0.25
+      },
+      {
+        "name": "lambada_openai",
+        "primary": "acc",
+        "chance": 0.0
+      },
+      {
+        "name": "wikitext",
+        "primary": "bits_per_byte",
+        "chance": null
+      }
+    ]
+  },
+  "device": "cuda",
+  "fingerprint": {
+    "sha256": "735c9e62572a689c4796ceb21ce5a2edd8b2559196e81ee71250c1814b9d4eff",
+    "tokenizer_sha256": "f35677bad9e5f15da8f9842cc8c13cd9009ad86b498ffa4c59ebf46f3c88ade9"
+  },
+  "lm_eval": "0.4.13",
+  "python": "3.11.17",
+  "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+  "torch": "2.14.1",
+  "transformers": "5.19.0",
+  "mini_eval": {
+    "commit": "ff80e37f6734ff2454af270234a139d0a2227009",
+    "dirty": false
+  },
+  "mini_llm": {
+    "version": "0.1.0",
+    "commit": "611ba64951624468f3d85b0de4e5fcae9734d352",
+    "dirty": true
+  },
+  "date": "2026-10-22T20:52:15",
+  "duration_seconds": 1113.6
+}
