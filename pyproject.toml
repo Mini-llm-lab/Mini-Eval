@@ -1,10 +1,10 @@
 [project]
 name = "mini-eval"
 version = "0.1.0"
-description = "Add your description here"
+description = "Evaluation of Mini-LLM models against reference models with lm-evaluation-harness"
 readme = "README.md"
 authors = [
-    { name = "GautierPicon", email = "bt2ay5d9@anonaddy.com" }
+    { name = "Mini-LLM Lab" }
 ]
 requires-python = ">=3.11"
 dependencies = [
