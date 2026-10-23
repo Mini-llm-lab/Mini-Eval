@@ -96,3 +96,16 @@ models:
     params: 152596224
     non_embedding_params: 127430400
     tokens_seen: 4499963904
+
+  # 150M v2: digit-split tokenizer, ctx 2048, ~7.0B tokens. Uncomment and fill the
+  # two sha256 fields with `mini-eval fingerprint` once the base checkpoint exists.
+  # - name: mini-llm-150M-v2
+  #   kind: native
+  #   family: mini-llm-150M-v2
+  #   checkpoint: digit32k/150M/mini-llm-base-150M-53375steps.pt
+  #   tokenizer: digit32k/tok.json
+  #   sha256: <fill>
+  #   tokenizer_sha256: <fill>
+  #   params: 152596224
+  #   non_embedding_params: 127430400
+  #   tokens_seen: 6995968000
